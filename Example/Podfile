@@ -1,5 +1,7 @@
 platform :ios, '7.0'
 source 'https://github.com/CocoaPods/Specs.git'
 
-pod 'AFNetworking', '~> 2.5.0'
-pod 'VZPolicCollectionCell', :git => 'https://github.com/alekoleg/VZPolicCollectionCell'
+pod 'VZPolicCollectionView', :git => 'https://github.com/alekoleg/VZPolicCollectionView'
+pod 'AOInfoNetManager', :git => 'https://github.com/alekoleg/AOInfoNetManager'
+pod 'CLPLoading', :git => 'https://github.com/alekoleg/CLPLoading'
+pod 'UIActivityIndicator-for-SDWebImage', '~> 1.2'
