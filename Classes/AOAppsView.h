@@ -12,4 +12,7 @@
 
 + (instancetype)appsViewWithWidth:(CGFloat)widht;
 
+@property (nonatomic, strong) NSString *noDataErrorText;
+@property (nonatomic, readonly) UILabel *titleLabel;
+
 @end

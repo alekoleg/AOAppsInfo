@@ -16,6 +16,7 @@
 #import <AOFile.h>
 
 static NSString * const AOAppViewUserDefaultsKey = @"AOAppViewUserDefaultsKey";
+static float const AOAppViewTitleHeigth = 50;
 
 @interface AOAppsView () <VZPolicCollectionViewDelegate>
 @property (nonatomic, strong) VZPolicCollectionView *collectionView;
@@ -26,7 +27,7 @@ static NSString * const AOAppViewUserDefaultsKey = @"AOAppViewUserDefaultsKey";
 @implementation AOAppsView
 
 + (instancetype)appsViewWithWidth:(CGFloat)width {
-    AOAppsView *view = [[AOAppsView alloc] initWithFrame:CGRectMake(0, 0, width, VZAppCollectionCellSize.height)];
+    AOAppsView *view = [[AOAppsView alloc] initWithFrame:CGRectMake(0, 0, width, VZAppCollectionCellSize.height + AOAppViewTitleHeigth)];
     [view loadData];
     return view;
 }
@@ -43,7 +44,7 @@ static NSString * const AOAppViewUserDefaultsKey = @"AOAppViewUserDefaultsKey";
     
     self.frame = ({
         CGRect frame = self.frame;
-        frame.size.height = VZAppCollectionCellSize.height;
+        frame.size.height = VZAppCollectionCellSize.height + AOAppViewTitleHeigth;
         frame;
     });
     
@@ -54,19 +55,35 @@ static NSString * const AOAppViewUserDefaultsKey = @"AOAppViewUserDefaultsKey";
 #pragma mark - Setup -
 
 - (void)setup {
+    self.noDataErrorText = @"Ничего не загрузилось";
+    [self setupTitleLabel];
     [self setupCollectionView];
     [self loadData];
 }
 
 - (void)setupCollectionView {
     if (!self.collectionView) {
-        self.collectionView = [[VZPolicCollectionView alloc] initWithFrame:self.bounds];
+        self.collectionView = [[VZPolicCollectionView alloc] initWithFrame:CGRectMake(0, AOAppViewTitleHeigth, self.frame.size.width, self.frame.size.height - AOAppViewTitleHeigth)];
         self.collectionView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         self.collectionView.centerContent = YES;
         self.collectionView.delegate = self;
+        self.collectionView.sectionWidth = VZAppCollectionCellSize.width;
         [self addSubview:self.collectionView];
     }
 }
+
+- (void)setupTitleLabel {
+    if (!_titleLabel) {
+        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, AOAppViewTitleHeigth)];
+        _titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:20];
+        _titleLabel.textAlignment = NSTextAlignmentCenter;
+        _titleLabel.textColor = [UIColor colorWithRed:97.0/255.0 green:172.0/255.0 blue:243.0/255.0 alpha:1.0];
+        _titleLabel.text = @"Наши приложения";
+        [self addSubview:_titleLabel];
+    }
+}
+
+
 
 #pragma mark - Actions -
 
@@ -87,8 +104,7 @@ static NSString * const AOAppViewUserDefaultsKey = @"AOAppViewUserDefaultsKey";
             [weakSelf clp_hideAll];
             [weakSelf.collectionView reloadData];
         } else {
-            NSString *text = @"Ничего не загрузилось";
-            [weakSelf clp_showError:text retryBlock:NULL];
+            [weakSelf clp_showError:self.noDataErrorText retryBlock:NULL];
         }
     } fail:^(NSError *error) {
         if (weakSelf.content.count == 0) {
@@ -129,6 +145,17 @@ static NSString * const AOAppViewUserDefaultsKey = @"AOAppViewUserDefaultsKey";
 }
 
 - (void)policCollectionView:(VZPolicCollectionView *)collectionView didTappedCell:(VZPolicCollectionCell *)cell atIndex:(NSInteger)index {
+    
+    AOAppModel *model = self.content[index];
+    NSURL *url = [NSURL URLWithString:model.redirectURL];
+    if (url && [[UIApplication sharedApplication] canOpenURL:url]) {
+        [[UIApplication sharedApplication] openURL:url];
+    } else {
+        url = [NSURL URLWithString:model.url];
+        if (url && [[UIApplication sharedApplication] canOpenURL:url]) {
+            [[UIApplication sharedApplication] openURL:url];
+        }
+    }
     
 }
 
