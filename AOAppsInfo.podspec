@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name         = "AOAppsIngo"
+  s.name         = "AOAppsInfo"
   s.version      = "0.0.1"
   s.summary      = "Part of Parse info application"
   s.description  = "Part of info application responsible for presentation of our apps"
