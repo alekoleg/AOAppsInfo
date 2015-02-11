@@ -77,6 +77,7 @@ static float const AOAppViewTitleHeigth = 50;
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, AOAppViewTitleHeigth)];
         _titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:20];
         _titleLabel.textAlignment = NSTextAlignmentCenter;
+        _titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         _titleLabel.textColor = [UIColor colorWithRed:97.0/255.0 green:172.0/255.0 blue:243.0/255.0 alpha:1.0];
         _titleLabel.text = @"Наши приложения";
         [self addSubview:_titleLabel];
