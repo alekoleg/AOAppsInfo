@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "AOAppsInfo"
-  s.version      = "0.0.1"
+  s.version      = "0.0.2"
   s.summary      = "Part of Parse info application"
   s.description  = "Part of info application responsible for presentation of our apps"
   s.homepage     = "https://github.com/alekoleg/AOAppsInfo.git"
@@ -13,9 +13,9 @@ Pod::Spec.new do |s|
   s.source_files = 'Classes/**/*.{h,m}'
   s.public_header_files = 'Classes/**/*.h'
   s.frameworks = 'Foundation', 'UIKit'
-#  s.dependency 'VZPolicCollectionView', :git => 'https://github.com/alekoleg/VZPolicCollectionView'
-# s.dependency 'AOInfoNetManager', :git => 'https://github.com/alekoleg/AOInfoNetManager'
-#  s.dependency 'CLPLoading', :git => 'https://github.com/alekoleg/CLPLoading'
+  s.dependency 'VZPolicCollectionView', '~> 0.0.3'
+  s.dependency 'AOInfoNetManager', '~> 0.0.2'
+  s.dependency 'CLPLoading', '~> 0.0.3'
   s.dependency 'UIActivityIndicator-for-SDWebImage', '~> 1.2'
   
 end
